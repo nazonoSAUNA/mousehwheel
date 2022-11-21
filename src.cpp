@@ -1,6 +1,5 @@
 #include <windows.h>
 #include <filter.h>
-#include <stdio.h>
 
 FILTER_DLL filter = {
     FILTER_FLAG_ALWAYS_ACTIVE | FILTER_FLAG_NO_CONFIG,
