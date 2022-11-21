@@ -5,7 +5,7 @@
 FILTER_DLL filter = {
     FILTER_FLAG_ALWAYS_ACTIVE | FILTER_FLAG_NO_CONFIG,
     NULL,NULL,
-    const_cast<char*>("É}ÉEÉXâ°ÉzÉCÅ[Éã"),
+    const_cast<char*>("„Éû„Ç¶„ÇπÊ®™„Éõ„Ç§„Éº„É´"),
     NULL,NULL,NULL,
     NULL,NULL,
     NULL,NULL,NULL,
@@ -27,7 +27,7 @@ FILTER* get_exeditfp(FILTER* fp) {
     for (int i = 0; i < si.filter_n; i++) {
         FILTER* tfp = (FILTER*)fp->exfunc->get_filterp(i);
         if (tfp->information != NULL) {
-            if (!strcmp(tfp->information, "ägí£ï“èW(exedit) version 0.92 by ÇjÇdÇmÇ≠ÇÒ")) return tfp;
+            if (!strcmp(tfp->information, "Êã°ÂºµÁ∑®ÈõÜ(exedit) version 0.92 by Ôº´Ôº•ÔºÆ„Åè„Çì")) return tfp;
         }
     }
     return NULL;
@@ -47,10 +47,10 @@ BOOL exedit_Replace8(int exedit_address, byte new_8) {
 
 
 BOOL exedit_func_WndProc_wrap(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam, void* editp, void* fp) {
-    if (message == 0x20e) {
+    if (message == WM_MOUSEHWHEEL) {
         if (((FILTER*)fp)->exfunc->is_saving(editp) == 0) {
-            int wheel_right = (short)(wparam >> 0x10);
             if ((wparam & 8) == 0) {
+                int wheel_right = (short)(wparam >> 0x10);
                 if (wheel_right != 0) {
                     int* timeline_zoom = (int*)(exedit_base + 0xa3fc8);
                     int* timeline_pos = (int*)(exedit_base + 0x1a52f0);
@@ -67,12 +67,12 @@ BOOL exedit_func_WndProc_wrap(HWND hwnd, UINT message, WPARAM wparam, LPARAM lpa
 BOOL func_init(FILTER* fp) {
     FILTER* exeditfp = get_exeditfp(fp);
     if (exeditfp == NULL) {
-        MessageBoxA(fp->hwnd, "ägí£ï“èW0.92Ç™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÇ≈ÇµÇΩ", fp->name, MB_OK);
+        MessageBoxA(fp->hwnd, "Êã°ÂºµÁ∑®ÈõÜ0.92„ÅåË¶ã„Å§„Åã„Çä„Åæ„Åõ„Çì„Åß„Åó„Åü", fp->name, MB_OK);
         return TRUE;
     }
     exedit_base = (int)exeditfp->dll_hinst;
 
-    exedit_Replace8(0x3decd, 0x7c); // ècÉzÉCÅ[ÉãÇècÉXÉNÉçÅ[ÉãÇ…ÅAAlt+ècÉzÉCÅ[ÉãÇâ°ÉXÉNÉçÅ[ÉãÇ…Ç∑ÇÈ
+    exedit_Replace8(0x3decd, 0x7c); // Á∏¶„Éõ„Ç§„Éº„É´„ÇíÁ∏¶„Çπ„ÇØ„É≠„Éº„É´„Å´„ÄÅAlt+Á∏¶„Éõ„Ç§„Éº„É´„ÇíÊ®™„Çπ„ÇØ„É≠„Éº„É´„Å´„Åô„Çã
 
     exedit_func_WndProc = exeditfp->func_WndProc;
     exeditfp->func_WndProc = exedit_func_WndProc_wrap;
